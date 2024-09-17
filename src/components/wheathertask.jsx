@@ -8,30 +8,29 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import rainAnimation from '../assests/animation/rain.json';
 import sunnyAnimation from '../assests/animation/sunny.json';
 import cloudyAnimation from '../assests/animation/cloudy.json';
-import tunderstrom from '../assests/animation/tunderstrom.json'
+import thunderstormAnimation from '../assests/animation/tunderstrom.json'; // Corrected filename
 
-function Wheathertask() {
+function Wheathertask({ selectedCity }) {
+
+  console.log(`Selected city in Wheathertask: ${selectedCity}`);
   const [City, setCity] = useState("");  
-  const [search, setsearch] = useState(false);
+  const [search, setSearch] = useState(false);
   const [weather, setWeather] = useState(null);
   const [error, setError] = useState("");
   const [flagUrl, setFlagUrl] = useState(""); 
   const [countryInfo, setCountryInfo] = useState({});
   const apikey = "b2b3df336f2787af0e9246e6d10d0a37";
 
-  const getweather = useCallback(async () => {
+  const getWeather = useCallback(async () => {
     if (!City) return;
     try {
       const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${apikey}&units=metric`;
       const weatherResponse = await axios.get(weatherUrl);
-      console.log(weatherResponse.data);  
       setWeather(weatherResponse.data);
       setError("");
 
       const countryCode = weatherResponse.data.sys.country.toLowerCase(); 
       const flagUrlResponse = await axios.get(`https://restcountries.com/v3.1/alpha/${countryCode}`);
-      console.log(flagUrlResponse.data);
-      
       
       if (flagUrlResponse.data && flagUrlResponse.data[0]) {
         const countryData = flagUrlResponse.data[0];
@@ -54,32 +53,26 @@ function Wheathertask() {
       setFlagUrl(""); 
       setCountryInfo({});
     } finally {
-      setsearch(false);
+      setSearch(false);
     }
   }, [City, apikey]);
 
   useEffect(() => {
-    if (search) {
-      getweather();
+    if (selectedCity) {
+      setCity(selectedCity);
+      setSearch(true);
     }
-  }, [search, getweather]);
+  }, [selectedCity]);
 
   useEffect(() => {
-    const handleCitySelect = (event) => {
-      setCity(event.detail); 
-      setsearch(true); 
-    };
-
-    document.addEventListener('citySelected', handleCitySelect);
-
-    return () => {
-      document.removeEventListener('citySelected', handleCitySelect);
-    };
-  }, []);
+    if (search) {
+      getWeather();
+    }
+  }, [search, getWeather]);
 
   const getWeatherAnimation = (main) => {
     if (main.includes("rain")) return rainAnimation;
-    if (main.includes("thunderstorm")) return tunderstrom;
+    if (main.includes("thunderstorm")) return thunderstormAnimation;
     if (main.includes("clear")) return sunnyAnimation;
     if (main.includes("cloud")) return cloudyAnimation;
     return null; // Fallback
@@ -90,7 +83,7 @@ function Wheathertask() {
       <div className="row">
         {/* Left Column: Weather Info */}
         <div className="col-md-6">
-          <h5 style={{fontStyle: 'oblique', fontWeight:'revert-layer'}}>Search Location</h5>
+          <h5 className="font-italic font-weight-bold">Search Location</h5>
           <div className="mb-3">
             <input
               type="search"
@@ -103,16 +96,16 @@ function Wheathertask() {
             />
             <button
               className="btn btn-primary mt-3"
-              onClick={() => setsearch(true)}
+              onClick={() => setSearch(true)}
             >
               Search
             </button>
           </div>
           {error && <p>{error}</p>}
           {weather && (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{ flex: 1, display: "flex", gap: "40px" }}>
-                <div style={{ fontStyle: 'oblique', fontWeight: 'bold' }}>
+            <div className="d-flex align-items-center">
+              <div className="d-flex flex-column gap-4">
+                <div className="font-italic font-weight-bold">
                   <h2>{weather.name}</h2>
                   <h2>Temperature: {weather.main.temp}°C</h2>
                   <p>Weather: {weather.weather[0].description}</p>
@@ -121,7 +114,7 @@ function Wheathertask() {
                   <p>Country: {weather.sys.country}</p>
                   <p>Rain [1hr]: {weather.rain ? weather.rain['1h'] : "N/A"}</p>
                 </div>
-                <div style={{ marginLeft: '1rem' }}>
+                <div>
                   {getWeatherAnimation(weather.weather[0].description) && (
                     <Lottie
                       animationData={getWeatherAnimation(weather.weather[0].description)}
@@ -136,26 +129,24 @@ function Wheathertask() {
 
         {/* Right Column: Country Info */}
         {flagUrl && (
-          <div className="col-md-6">
+          <div className="col-md-6 text-center">
             <img
               src={flagUrl}
               alt="Country Flag"
+              className="img-fluid rounded"
               style={{
-                width: '50%',
-                maxWidth: '400px',
-                height: 'auto',
-                border: '5px solid black',
-                margin: '40px 200px'
+                maxWidth: '100%',
+                maxHeight: '300px',
+                border: '5px solid black'
               }}
             />
-            <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-              <div style={{ flex: 1, paddingLeft: '5px', fontStyle: 'italic', fontWeight: 'bold',margin:'20px 100px' }}>
-                <p>Area: {countryInfo.area} sq km</p>
-                <p>Population: {countryInfo.population}</p>
-                <p>Capital: {countryInfo.capital}</p>
-                <p>Continent: {countryInfo.continents}</p>
-                <p>Language: {countryInfo.languages}</p>
-              </div>
+            <div className="mt-4">
+              <p className="font-italic font-weight-bold">Area: {countryInfo.area} sq km</p>
+              <p className="font-italic font-weight-bold">Population: {countryInfo.population}</p>
+              <p className="font-italic font-weight-bold">Capital: {countryInfo.capital}</p>
+              <p className="font-italic font-weight-bold">Continent: {countryInfo.continents}</p>
+              <p className="font-italic font-weight-bold">Languages: {countryInfo.languages}</p>
+              <p className="font-italic font-weight-bold">Timezones: {countryInfo.timezones}</p>
             </div>
           </div>
         )}

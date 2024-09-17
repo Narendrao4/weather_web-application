@@ -1,29 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const WeatherSidebar = ({ onSelectCity }) => {
+const WeatherSidebar = ({ darkmode, setSelectedCity }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const handleCityClick = (city) => {
-    const event = new CustomEvent('citySelected', { detail: city });
-    document.dispatchEvent(event);
+    console.log(`City clicked: ${city}`);
+    setSelectedCity(city); // Notify parent about the selected city
   };
-  
+
+  // const toggleSidebar = () => {
+  //   setIsOpen(!isOpen);
+  // };
 
   return (
-    <aside className="weather-sidebar p-6 border-end">
-      <h2 className="text-center mb-4">City List</h2>
-      <ul className="city-list list-unstyled w-1">
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('New York')}>New York</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('London')}>London</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('Tokyo')}>Tokyo</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('Paris')}>Paris</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('Sydney')}>Sydney</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('Rome')}>Rome</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('Berlin')}>Berlin</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('Madrid')}>Madrid</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('Dubai')}>Dubai</button></li>
-        <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('Istanbul')}>Istanbul</button></li>
-      </ul>
-    </aside>
+    <>
+      {/* <button 
+        className="btn btn-primary d-md-none" 
+        onClick={toggleSidebar}
+        style={{ position: 'fixed', top: '10px', left: '10px', zIndex: 1050 }}
+      >
+        {isOpen ? 'Close Sidebar' : 'Open Sidebar'}
+      </button> */}
+      <aside className={`weather-sidebar p-3 border-end border border-black ${isOpen ? 'open' : ''} ${darkmode ? 'bg-dark text-light' : 'bg-sky-300 text-dark'}`}>
+        <h2 className="text-center mb-4">City List</h2>
+        <ul className="city-list list-unstyled">
+          {['New York', 'London', 'Tokyo', 'Paris', 'Sydney', 'Rome', 'Berlin', 'Madrid', 'Dubai', 'Istanbul'].map(city => (
+            <li key={city}>
+              <button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick(city)}>
+                {city}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </aside>
+    </>
   );
 };
 

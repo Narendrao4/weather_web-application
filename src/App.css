@@ -15,6 +15,6 @@
 .weather-sidebar {
   transition: transform 0.3s ease-in-out; /* Smooth transition for sidebar */
   background-color:skyblue;
-  height: 100vh;
+  height: 100%;
 }
 

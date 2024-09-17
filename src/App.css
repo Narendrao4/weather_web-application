@@ -18,3 +18,37 @@
   height: 100%;
 }
 
+
+
+
+
+
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.weather-sidebar {
+  background-color: skyblue;
+ /* width: 250px;  Adjust width as needed */
+  border-right: 1px solid black; /* Adds a separator between sidebar and main content */
+  z-index: 1000;
+  min-height: 100vh; /* Ensure it takes at least full height of the screen for mobile */
+  height: auto; /* Let height grow as content increases */
+  position: relative; /* It will not overlap other elements */
+  padding-bottom: 20px; /* Optional: Adds spacing at the bottom */
+}
+
+@media (min-width: 769px) {
+  .sidebar-toggle {
+    display: none; /* Hide toggle button on larger screens */
+  }
+
+  .weather-sidebar {
+    min-height: 100%; /* Full height for larger screens */
+  }
+}
+
+

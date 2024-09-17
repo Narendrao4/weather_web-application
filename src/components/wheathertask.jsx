@@ -82,71 +82,74 @@ function Wheathertask({ selectedCity }) {
     <div className="container mt-4">
       <div className="row">
         {/* Left Column: Weather Info */}
-        <div className="col-md-6">
-          <h5 className="font-italic font-weight-bold">Search Location</h5>
-          <div className="mb-3">
-            <input
-              type="search"
-              name="search"
-              id="search"
-              onChange={(e) => setCity(e.target.value)}
-              value={City}
-              placeholder="Enter city"
-              className="form-control"
-            />
-            <button
-              className="btn btn-primary mt-3"
-              onClick={() => setSearch(true)}
-            >
-              Search
-            </button>
+        <div className="col-md-4 d-flex flex-column justify-content-between">
+          <div>
+            <h5 className="font-italic font-weight-bold">Search Location</h5>
+            <div className="mb-3">
+              <input
+                type="search"
+                name="search"
+                id="search"
+                onChange={(e) => setCity(e.target.value)}
+                value={City}
+                placeholder="Enter city"
+                className="form-control"
+              />
+              <button
+                className="btn btn-primary mt-3"
+                onClick={() => setSearch(true)}
+              >
+                Search
+              </button>
+            </div>
+            {error && <p>{error}</p>}
           </div>
-          {error && <p>{error}</p>}
           {weather && (
-            <div className="d-flex align-items-center">
-              <div className="d-flex flex-column gap-4">
-                <div className="font-italic font-weight-bold">
-                  <h2>{weather.name}</h2>
-                  <h2>Temperature: {weather.main.temp}°C</h2>
-                  <p>Weather: {weather.weather[0].description}</p>
-                  <p>Humidity: {weather.main.humidity}%</p>
-                  <p>Wind Speed: {weather.wind.speed} m/s</p>
-                  <p>Country: {weather.sys.country}</p>
-                  <p>Rain [1hr]: {weather.rain ? weather.rain['1h'] : "N/A"}</p>
-                </div>
-                <div>
-                  {getWeatherAnimation(weather.weather[0].description) && (
-                    <Lottie
-                      animationData={getWeatherAnimation(weather.weather[0].description)}
-                      style={{ width: '12rem', height: 'auto' }}
-                    />
-                  )}
-                </div>
-              </div>
+            <div className="d-flex flex-column gap-1" style={{marginLeft:"20px"}}>
+              <h2>{weather.name}</h2>
+              <h2>Temperature: {weather.main.temp}°C</h2>
+              <p>Weather: {weather.weather[0].description}</p>
+              <p>Humidity: {weather.main.humidity}%</p>
+              <p>Wind Speed: {weather.wind.speed} m/s</p>
+              <p>Country: {weather.sys.country}</p>
+              <p>Rain [1hr]: {weather.rain ? weather.rain['1h'] : "N/A"}</p>
             </div>
           )}
         </div>
 
+        {/* Center Column: Animation */}
+        {weather && (
+          <div className="col-md-4 d-flex justify-content-center align-items-center">
+            {getWeatherAnimation(weather.weather[0].description) && (
+              <Lottie
+                animationData={getWeatherAnimation(weather.weather[0].description)}
+                style={{ width: '12rem', height: 'auto' }}
+              />
+            )}
+          </div>
+        )}
+
         {/* Right Column: Country Info */}
         {flagUrl && (
-          <div className="col-md-6 text-center">
+          <div className="col-md-4 d-flex flex-column justify-content-between align-items-center">
             <img
               src={flagUrl}
               alt="Country Flag"
               className="img-fluid rounded"
               style={{
                 maxWidth: '100%',
-                maxHeight: '300px',
-                border: '5px solid black'
+                maxHeight: '200px',
+                border: '5px solid black',
+                marginTop:'2rem'
               }}
             />
-            <div className="mt-4">
+            <div className="mt-2 text-center">
               <p className="font-italic font-weight-bold">Area: {countryInfo.area} sq km</p>
               <p className="font-italic font-weight-bold">Population: {countryInfo.population}</p>
               <p className="font-italic font-weight-bold">Capital: {countryInfo.capital}</p>
               <p className="font-italic font-weight-bold">Continent: {countryInfo.continents}</p>
               <p className="font-italic font-weight-bold">Languages: {countryInfo.languages}</p>
-              <p className="font-italic font-weight-bold">Timezones: {countryInfo.timezones}</p>
+              {/* <p className="font-italic font-weight-bold">Timezones: {countryInfo.timezones}</p> */}
             </div>
           </div>
         )}

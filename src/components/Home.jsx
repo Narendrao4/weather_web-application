@@ -12,7 +12,7 @@ const Home = ({ darkmode }) => {
         style={{ objectFit: 'cover' }} // Ensure the image covers the container
       />
       <div className="position-absolute top-50 start-50 translate-middle text-center" style={{ zIndex: 1 }}>
-        <h1 className={darkmode ? 'text-light' : 'text-dark'}>Weather Report</h1>
+        <h1 className={darkmode ? 'text-light' : 'text-dark'}>Weather Report is here</h1>
       </div>
       <footer className={`position-absolute bottom-0 w-100 p-3 text-center ${darkmode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
         <Link to="/contact" className={`text-decoration-none ${darkmode ? 'text-light' : 'text-dark'}`}>Contact Information</Link>

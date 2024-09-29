@@ -26,7 +26,7 @@ const App = () => {
           <WeatherSidebar darkmode={darkmode} setSelectedCity={handleCitySelection} />
           <div className="content flex-grow-1">
             <Routes>
-              <Route path="/" element={<Home darkmode={darkmode} />} />
+              <Route path="/weather_web-application" element={<Home darkmode={darkmode} />} />
               <Route path="/weather" element={<Wheathertask selectedCity={selectedCity} />} />
               <Route path="/contact" element={<Contact />} /> 
             </Routes>
@@ -35,6 +35,6 @@ const App = () => {
       </div>
     </Router>
   );
-};
+}  
 
 export default App;

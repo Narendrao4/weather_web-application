@@ -131,7 +131,7 @@ function Wheathertask({ selectedCity }) {
           )}
         </div>
 
-        {/* Right Column: Flag + Country Info */}
+        
         <div className="col-md-4 text-center">
           {flagUrl && (
             <>

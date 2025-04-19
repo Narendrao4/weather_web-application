@@ -8,7 +8,7 @@ const WeatherSidebar = ({ darkmode, setSelectedCity }) => {
   const handleCityClick = (city) => {
     console.log(`City clicked: ${city}`);
     setSelectedCity(city); // Notify parent about the selected city
-    navigate('/weather');  // Navigate to /weather after selecting the city
+    navigate('/weather'); 
   };
 
   return (

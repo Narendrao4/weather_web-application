@@ -21,7 +21,7 @@ const App = () => {
   return (
     <Router> 
       <div className={`App ${darkmode ? 'bg-dark text-light' : 'bg-light text-dark'}`}>
-        {/* ✅ Navbar outside the flex layout */}
+      
         <Navbar darkmode={darkmode} setdarkmode={setdarkmode} />
   
         {/* Sidebar + Content Layout */}

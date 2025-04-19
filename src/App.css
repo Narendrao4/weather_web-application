@@ -18,6 +18,18 @@
   height: 100%;
 }
 
+/* Ensures Navbar spans full width */
+.navbar {
+  width: 100%;
+  z-index: 1050;
+}
+
+/* Optional: Ensures content scrolls independently if needed */
+.content {
+  padding: 1rem;
+  overflow: auto;
+  min-height: 100vh;
+}
 
 
 

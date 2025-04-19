@@ -4,15 +4,12 @@ import Lottie from 'lottie-react';
 import 'bootstrap/dist/css/bootstrap.min.css';  
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
-// Import Lottie JSON files
 import rainAnimation from '../assests/animation/rain.json';
 import sunnyAnimation from '../assests/animation/sunny.json';
 import cloudyAnimation from '../assests/animation/cloudy.json';
-import thunderstormAnimation from '../assests/animation/tunderstrom.json'; // Corrected filename
+import thunderstormAnimation from '../assests/animation/tunderstrom.json';
 
 function Wheathertask({ selectedCity }) {
-
-  console.log(`Selected city in Wheathertask: ${selectedCity}`);
   const [City, setCity] = useState("");  
   const [search, setSearch] = useState(false);
   const [weather, setWeather] = useState(null);
@@ -41,7 +38,7 @@ function Wheathertask({ selectedCity }) {
           capital: countryData.capital ? countryData.capital[0] : "N/A",
           continents: countryData.continents ? countryData.continents.join(', ') : "N/A",
           languages: countryData.languages ? Object.values(countryData.languages).join(', ') : "N/A",
-          timezones: countryData.timezones[0] ? countryData.timezones.join(', ') : "N/A"
+          timezones: countryData.timezones ? countryData.timezones.join(', ') : "N/A"
         });
       } else {
         setFlagUrl(""); 
@@ -49,7 +46,7 @@ function Wheathertask({ selectedCity }) {
       }
     } catch (error) {
       setWeather(null);
-      setError("City not found or something went wrong.");
+      setError("❌ City not found or something went wrong.");
       setFlagUrl(""); 
       setCountryInfo({});
     } finally {
@@ -75,84 +72,85 @@ function Wheathertask({ selectedCity }) {
     if (main.includes("thunderstorm")) return thunderstormAnimation;
     if (main.includes("clear")) return sunnyAnimation;
     if (main.includes("cloud")) return cloudyAnimation;
-    return null; // Fallback
+    return null;
   };
 
   return (
     <div className="container mt-4">
+      <h2 className="text-center mb-4">🌍 Search Any City Station to Get Weather + Country Info</h2>
+      
       <div className="row">
-        {/* Left Column: Weather Info */}
+        {/* Left Column: Search + Weather */}
         <div className="col-md-4 d-flex flex-column justify-content-between">
-          <div>
-            <h5 className="font-italic font-weight-bold">Search Location</h5>
-            <div className="mb-3">
+          <div className="mb-4">
+            <label htmlFor="search" className="form-label">🔍 Search Location</label>
+            <div className="input-group">
               <input
                 type="search"
                 name="search"
                 id="search"
                 onChange={(e) => setCity(e.target.value)}
                 value={City}
-                placeholder="Enter city"
+                placeholder="Enter city name (e.g. London)"
                 className="form-control"
               />
-              <button
-                className="btn btn-primary mt-3"
-                onClick={() => setSearch(true)}
-              >
-                Search
+              <button className="btn btn-primary" onClick={() => setSearch(true)}>
+                <i className="bi bi-search"></i>
               </button>
             </div>
-            {error && <p>{error}</p>}
+            {error && <p className="text-danger mt-2">{error}</p>}
           </div>
+
           {weather && (
-            <div className="d-flex flex-column gap-1" style={{marginLeft:"20px"}}>
-              <h2>{weather.name}</h2>
-              <h2>Temperature: {weather.main.temp}°C</h2>
-              <p>Weather: {weather.weather[0].description}</p>
-              <p>Humidity: {weather.main.humidity}%</p>
-              <p>Wind Speed: {weather.wind.speed} m/s</p>
-              <p>Country: {weather.sys.country}</p>
-              <p>Rain [1hr]: {weather.rain ? weather.rain['1h'] : "N/A"}</p>
+            <div className="d-flex flex-column gap-1 ps-2">
+              <h4 className="fw-bold">{weather.name}</h4>
+              <p>🌡 Temperature: {weather.main.temp}°C</p>
+              <p>🌦 Weather: {weather.weather[0].description}</p>
+              <p>💧 Humidity: {weather.main.humidity}%</p>
+              <p>💨 Wind Speed: {weather.wind.speed} m/s</p>
+              <p>🏳️ Country: {weather.sys.country}</p>
+              <p>🌧 Rain [1hr]: {weather.rain ? weather.rain['1h'] : "N/A"}</p>
             </div>
           )}
         </div>
 
         {/* Center Column: Animation */}
-        {weather && (
-          <div className="col-md-4 d-flex justify-content-center align-items-center">
-            {getWeatherAnimation(weather.weather[0].description) && (
+        <div className="col-md-4 d-flex justify-content-center align-items-center">
+          {weather ? (
+            getWeatherAnimation(weather.weather[0].description) && (
               <Lottie
                 animationData={getWeatherAnimation(weather.weather[0].description)}
                 style={{ width: '12rem', height: 'auto' }}
               />
-            )}
-          </div>
-        )}
-
-        {/* Right Column: Country Info */}
-        {flagUrl && (
-          <div className="col-md-4 d-flex flex-column justify-content-between align-items-center">
-            <img
-              src={flagUrl}
-              alt="Country Flag"
-              className="img-fluid rounded"
-              style={{
-                maxWidth: '100%',
-                maxHeight: '200px',
-                border: '5px solid black',
-                marginTop:'2rem'
-              }}
-            />
-            <div className="mt-2 text-center">
-              <p className="font-italic font-weight-bold">Area: {countryInfo.area} sq km</p>
-              <p className="font-italic font-weight-bold">Population: {countryInfo.population}</p>
-              <p className="font-italic font-weight-bold">Capital: {countryInfo.capital}</p>
-              <p className="font-italic font-weight-bold">Continent: {countryInfo.continents}</p>
-              <p className="font-italic font-weight-bold">Languages: {countryInfo.languages}</p>
-              {/* <p className="font-italic font-weight-bold">Timezones: {countryInfo.timezones}</p> */}
+            )
+          ) : (
+            <div className="text-muted text-center">
+              <p className="fw-light">Search for a Station to see weather animation</p>
+              <i className="bi bi-cloud-sun" style={{ fontSize: '3rem' }}></i>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+
+        {/* Right Column: Flag + Country Info */}
+        <div className="col-md-4 text-center">
+          {flagUrl && (
+            <>
+              <img
+                src={flagUrl}
+                alt="Country Flag"
+                className="img-fluid rounded shadow-sm"
+                style={{ maxHeight: '200px', border: '5px solid black', marginTop: '1rem' }}
+              />
+              <div className="mt-3">
+                <p><strong>🗺 Area:</strong> {countryInfo.area} sq km</p>
+                <p><strong>👥 Population:</strong> {countryInfo.population}</p>
+                <p><strong>🏙 Capital:</strong> {countryInfo.capital}</p>
+                <p><strong>🌐 Continent:</strong> {countryInfo.continents}</p>
+                <p><strong>🗣 Languages:</strong> {countryInfo.languages}</p>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

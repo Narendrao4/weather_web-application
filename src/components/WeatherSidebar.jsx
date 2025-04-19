@@ -10,7 +10,7 @@ const WeatherSidebar = ({ onSelectCity }) => {
 
   return (
     <aside className="weather-sidebar p-6 border-end">
-      <h2 className="text-center mb-4">City List</h2>
+      <h2 className="text-center mb-4">City Listssssssssss</h2>
       <ul className="city-list list-unstyled w-1">
         <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('New York')}>New York</button></li>
         <li><button className="city-button btn btn-outline-primary w-100 mb-2" onClick={() => handleCityClick('London')}>London</button></li>

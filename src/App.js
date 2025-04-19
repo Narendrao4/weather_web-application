@@ -28,6 +28,8 @@ const App = () => {
               <Route path="/weather" element={<Wheathertask selectedCity={selectedCity} />} />
               <Route path="/contact" element={<Contact />} /> 
             </Routes>
+
+            
           </div>
         </div>
       </div>

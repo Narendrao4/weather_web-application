@@ -146,7 +146,7 @@ function Wheathertask({ selectedCity }) {
                 <p><strong>👥 Population:</strong> {countryInfo.population}</p>
                 <p><strong>🏙 Capital:</strong> {countryInfo.capital}</p>
                 <p><strong>🌐 Continent:</strong> {countryInfo.continents}</p>
-                <p><strong>🗣 Languages:</strong> {countryInfo.languages}</p>
+                <p><strong> Languages:</strong> {countryInfo.languages}</p>
               </div>
             </>
           )}

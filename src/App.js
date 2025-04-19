@@ -15,7 +15,7 @@ const App = () => {
 
   const handleCitySelection = (city) => {
     setSelectedCity(city);
-    console.log(`Selected city: ${city}`); // This should show the selected city in the console
+    console.log(`Selected city: ${city}`); 
   };
 
   return (

@@ -13,7 +13,7 @@
   }
 }
 .weather-sidebar {
-  transition: transform 0.3s ease-in-out; /* Smooth transition for sidebar */
+  transition: transform 0.3s ease-in-out; 
   background-color:skyblue;
   height: 100%;
 }

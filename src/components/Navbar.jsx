@@ -39,7 +39,7 @@ const Navbar = ({ darkmode, setdarkmode }) => {
                 to="/contact" 
                 className={`nav-link text-decoration-none px-3 py-2 rounded ${darkmode ? 'text-light' : 'text-dark'} hover:text-yellow-400 transition duration-300`}
               >
-                Contact
+                Contact   
               </Link>
             </li>
             <li className="nav-item">

@@ -13,7 +13,7 @@ const WeatherSidebar = ({ darkmode, setSelectedCity }) => {
 
   return (
     <aside className={`weather-sidebar p-3 border-end border border-black ${darkmode ? 'bg-dark text-light' : 'bg-sky-300 text-dark'}`}>
-      <h2 className="text-center mb-4">City List</h2>
+      <h2 className="text-center mb-4">City  List</h2>
       <ul className="city-list list-unstyled">
         {['New York', 'London', 'Tokyo', 'Paris', 'Sydney', 'Rome', 'Berlin', 'Madrid', 'Dubai', 'Istanbul'].map(city => (
           <li key={city}>
